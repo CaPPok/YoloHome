@@ -16,6 +16,7 @@ Tạo file .env
 # 2. Nhập tên database vào "name_database"
 DATABASE_URL=postgresql://postgres:your_password@localhost:5432/name_database
 ```
+Sau đó, cài đặt file requirements.txt
 
 ```bash
 cd backend
