@@ -6,28 +6,28 @@ Frontend: Vite + React
 Backend: Flask
 Database: PostgreSQL
 ```
-
+---
+## Setup
 ### Backend Setup
+
+Tạo file .env
+```bash
+# 1. Nhập mật khẩu của pgAdmin4 vào "your_password"
+# 2. Nhập tên database vào "name_database"
+DATABASE_URL=postgresql://postgres:your_password@localhost:5432/name_database
+```
 
 ```bash
 cd backend
 
-''' 
-1. Tạo file .env và thêm dòng code này vào
-Nhập mật khẩu của pgAdmin4 vào "your_password"
-Nhập tên database vào "name_database"
-'''
-DATABASE_URL=postgresql://postgres:your_password@localhost:5432/name_database
-
-# 2. Cài dependencies
+# 1. Cài dependencies
 pip install -r requirements.txt
 
-# 3. Chạy server
+# 2. Chạy server
 python app.py
 
-# hoặc
-
-flask run
+# hoặc 
+# flask run
 ```
 
 Server chạy tại: **http://localhost:5000**
@@ -51,8 +51,6 @@ Frontend chạy tại: **http://localhost:5173**
 ## Login
 
 Mở **http://localhost:5173** → Nhập email + password từ database
-
----
 
 ---
 
