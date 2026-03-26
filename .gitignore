@@ -1,5 +1,6 @@
 # File .env
 backend/.env
+backend/venv/
 
 # Logs
 logs
