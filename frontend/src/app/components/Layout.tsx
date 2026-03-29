@@ -13,13 +13,13 @@ import {
 import { useState } from "react";
 
 const navItems = [
-  { path: "/", label: "Dashboard", icon: LayoutDashboard, color: "pastel-sky" },
+  { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard, color: "pastel-sky" },
   { path: "/devices", label: "Devices", icon: Cpu, color: "pastel-mint" },
   { path: "/schedule", label: "Schedule", icon: Calendar, color: "pastel-lavender" },
   { path: "/settings", label: "Settings", icon: SettingsIcon, color: "pastel-sage" },
 ];
 
-export function Layout() {
+export function Layout({ children }: { children?: React.ReactNode }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMicActive, setIsMicActive] = useState(false);
   const navigate = useNavigate();
@@ -131,7 +131,7 @@ export function Layout() {
 
         {/* Page content */}
         <main className="min-h-screen p-6 lg:p-8">
-          <Outlet />
+          {children || <Outlet />}
         </main>
       </div>
 

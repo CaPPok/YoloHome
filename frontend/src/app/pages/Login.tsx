@@ -63,7 +63,7 @@ export function Login() {
       localStorage.setItem("user", JSON.stringify(data.data.user));
 
       // Navigate to dashboard
-      navigate("/", { replace: true });
+      navigate("/dashboard", { replace: true });
     } catch (err) {
       setError("Kết nối backend thất bại. Vui lòng kiểm tra server.");
       console.error(err);
@@ -177,7 +177,7 @@ export function Login() {
 
         {/* Footer */}
         <div className="text-center text-xs text-gray-500">
-          <p>© 2026 YOLO:HOME | ĐỒ ÁN ĐA NGÀNH HƯỚNG TRÍ TUỆ NHÂN TẠO</p>
+          <p>@ 2026 YOLO:HOME | ĐỒ ÁN ĐA NGÀNH HƯỚNG TRÍ TUỆ NHÂN TẠO</p>
         </div>
       </div>
     </div>

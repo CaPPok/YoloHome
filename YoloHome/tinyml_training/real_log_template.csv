@@ -1,0 +1,6 @@
+timestamp_ms,avg_temp,avg_humi,label_hot,source
+0,29.8,72.0,0,real_room_a
+2000,30.1,72.8,0,real_room_a
+4000,30.5,74.0,0,real_room_a
+6000,31.0,76.0,1,real_room_a
+8000,31.4,77.5,1,real_room_a

@@ -24,6 +24,18 @@ db.init_app(app)
 from routes.auth import auth_bp
 app.register_blueprint(auth_bp)
 
+# Đăng ký route devices
+from routes.devices import devices_bp
+app.register_blueprint(devices_bp)
+
+# Đăng ký route sensors
+from routes.sensors import sensors_bp
+app.register_blueprint(sensors_bp)
+
+# Đăng ký webhook Adafruit
+from routes.adafruit_webhook import webhook_bp
+app.register_blueprint(webhook_bp)
+
 # ==========================================
 # Home route
 # ==========================================
