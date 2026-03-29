@@ -303,11 +303,3 @@ Output sẽ ở `frontend/dist/`
 - Deploy lên server với gunicorn hoặc waitress
 
 ---
-
-## 10. TEAM & NOTES
-
-- **Hardware Integration**: Chờ Bạn A cài đặt ESP32 code & Adafruit feeds
-- **Testing**: Kiểm tra end-to-end flow sau khi hardware ready
-- **Documentation**: Chi tiết thiết bị & feed mapping xem trong `databaseIOT.sql`
-
----
