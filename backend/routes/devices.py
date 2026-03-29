@@ -163,8 +163,8 @@ def control_thiet_bi(thiet_bi_id):
             command['action'] = 'fan_speed'
             command['speed'] = payload.get('speed', 50)
         
-        # Gửi tới Adafruit REST API
-        response = send_command_to_adafruit(command)
+        # Gửi tới Adafruit REST API (truyền device type để biết send tới feed nào)
+        response = send_command_to_adafruit(command, device.loai_thiet_bi)
         
         if not response['success']:
             return jsonify({'status': 'error', 'message': response['message']}), 500
@@ -208,40 +208,56 @@ def control_thiet_bi(thiet_bi_id):
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
 
-def send_command_to_adafruit(command):
+def send_command_to_adafruit(command, device_type='den'):
     """
     Gửi command tới Adafruit Cloud thông qua REST API
     
-    POST https://io.adafruit.com/api/v2/{username}/feeds/yolohome-command/data
-    Body: {"value": "<JSON_STRING>"}
+    POST https://io.adafruit.com/api/v2/{username}/groups/{group}/feeds/yolohome-command/data
+    Body: {"value": "<JSON_STRING_hoặc_TEXT>"}
     Header: X-AIO-Key: {key}
+    
+    Theo tài liệu spec: Tất cả commands gửi tới yolohome-command feed
+    yolohome-light & yolohome-fan chỉ là OUTPUT feeds (board publish status)
     """
     try:
         adafruit_user = os.getenv('ADAFRUIT_IO_USER')
         adafruit_key = os.getenv('ADAFRUIT_IO_KEY')
+        group_key = os.getenv('ADAFRUIT_GROUP_KEY', 'yolohome')  # Default group key
+        
+        print(f"[DEBUG] Adafruit User: {adafruit_user}")
+        print(f"[DEBUG] Adafruit Group: {group_key}")
+        print(f"[DEBUG] Command: {command}")
         
         if not adafruit_user or not adafruit_key:
+            print("[ERROR] Credentials missing!")
             return {
                 'success': False,
-                'message': 'Chưa cấu hình Adafruit IO credentials (.env)'
+                'message': 'Chưa cấu hình Adafruit IO credentials'
             }
         
-        # Build API URL
-        url = f'https://io.adafruit.com/api/v2/{adafruit_user}/feeds/yolohome-command/data'
+        # Tất cả commands gửi tới yolohome-command feed
+        feed_key = f'{group_key}.yolohome-command'
         
-        # Prepare headers
+        # URL: POST /api/v2/{username}/feeds/{feed}/data
+        url = f'https://io.adafruit.com/api/v2/{adafruit_user}/feeds/{feed_key}/data'
+        print(f"[DEBUG] URL: {url}")
+        
         headers = {
             'Content-Type': 'application/json',
             'X-AIO-Key': adafruit_key
         }
         
-        # Command value must be JSON string
+        # Payload: {"value": "<JSON hoặc TEXT>"}
+        # Command phải được stringify thành JSON string nếu là object
+        command_value = json.dumps(command) if isinstance(command, dict) else str(command)
         payload = {
-            'value': json.dumps(command)
+            'value': command_value
         }
+        print(f"[DEBUG] Payload: {payload}")
         
-        # Send POST request to Adafruit
         response = requests.post(url, json=payload, headers=headers, timeout=5)
+        print(f"[DEBUG] Response Status: {response.status_code}")
+        print(f"[DEBUG] Response: {response.text}")
         
         if response.status_code in [200, 201]:
             return {
@@ -254,18 +270,10 @@ def send_command_to_adafruit(command):
                 'success': False,
                 'message': f'Adafruit API error: {response.status_code} - {response.text}'
             }
-    
-    except requests.exceptions.Timeout:
-        return {
-            'success': False,
-            'message': 'Adafruit API timeout'
-        }
-    except requests.exceptions.RequestException as e:
-        return {
-            'success': False,
-            'message': f'Request error: {str(e)}'
-        }
     except Exception as e:
+        print(f"[ERROR] Exception: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return {
             'success': False,
             'message': f'Error: {str(e)}'

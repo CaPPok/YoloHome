@@ -295,7 +295,7 @@ export function Dashboard() {
                     <Thermometer className="w-4 h-4 text-[#6366f1]" />
                     <div>
                       <div className="text-xs text-gray-600">Nhiệt độ</div>
-                      <div className="font-bold text-gray-800">{room.temp.toFixed(1)}°C</div>
+                      <div className="font-bold text-gray-800">{room.temp.toFixed(2)}°C</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -312,7 +312,7 @@ export function Dashboard() {
         </motion.div>
 
         {/* AI Prediction Chart */}
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
@@ -355,7 +355,7 @@ export function Dashboard() {
               <span className="font-semibold">Thiết bị:</span> YOLO:BIT - Kết nối qua Serial USB, cập nhật dữ liệu mỗi 5 giây.
             </p>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );

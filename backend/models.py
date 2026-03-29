@@ -198,7 +198,7 @@ class LichSuCamBien(db.Model):
     thiet_bi_id = db.Column(db.String(50), db.ForeignKey('thiet_bi.id'), nullable=False)
     nhiet_do = db.Column(db.Float, nullable=True)
     do_am = db.Column(db.Float, nullable=True)
-    thoi_gian = db.Column(db.DateTime, default=datetime.utcnow)
+    thoi_gian_ghi_nhan = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):
         return {
@@ -206,7 +206,7 @@ class LichSuCamBien(db.Model):
             'thiet_bi_id': self.thiet_bi_id,
             'nhiet_do': self.nhiet_do,
             'do_am': self.do_am,
-            'thoi_gian': self.thoi_gian.isoformat() if self.thoi_gian else None
+            'thoi_gian_ghi_nhan': self.thoi_gian_ghi_nhan.isoformat() if self.thoi_gian_ghi_nhan else None
         }
 
 

@@ -128,26 +128,25 @@ VALUES
 INSERT INTO trang_thai_thiet_bi (thiet_bi_id, trang_thai_bat_tat, toc_do, mau_sac) 
 VALUES 
     ('DEN_001', TRUE, 0, '#FFFFFF'), 
-    ('QUAT_001', TRUE, 50, '#000000'),
-    ('SENSOR_001', FALSE, 0, '#000000');
+    ('QUAT_001', TRUE, 50, '#000000');
 
 -- Thêm dữ liệu mẫu vào trang_thai_cam_bien (trạng thái hiện tại)
-INSERT INTO trang_thai_cam_bien (thiet_bi_id, nhiet_do, do_am, thoi_gian_cap_nhat) 
-VALUES 
-    ('SENSOR_001', 27.5, 65.0, CURRENT_TIMESTAMP);
+-- Sẽ được cập nhật từ Adafruit feed khi ESP32 connect
 
 -- Thêm dữ liệu lịch sử cảm biến để test Dashboard chart
-INSERT INTO lich_su_cam_bien (thiet_bi_id, nhiet_do, do_am, thoi_gian_ghi_nhan) 
-VALUES 
-    ('SENSOR_001', 25.0, 62.0, CURRENT_TIMESTAMP - INTERVAL '2 hours'),
-    ('SENSOR_001', 26.2, 63.5, CURRENT_TIMESTAMP - INTERVAL '1 hour 30 minutes'),
-    ('SENSOR_001', 27.1, 64.2, CURRENT_TIMESTAMP - INTERVAL '1 hour'),
-    ('SENSOR_001', 27.5, 65.0, CURRENT_TIMESTAMP);
+-- Sẽ được tự động thêm từ background sync task
+-- INSERT INTO lich_su_cam_bien (thiet_bi_id, nhiet_do, do_am, thoi_gian_ghi_nhan) 
+-- VALUES 
+--     ('SENSOR_001', 25.0, 62.0, CURRENT_TIMESTAMP - INTERVAL '2 hours'),
+--     ('SENSOR_001', 26.2, 63.5, CURRENT_TIMESTAMP - INTERVAL '1 hour 30 minutes'),
+--     ('SENSOR_001', 27.1, 64.2, CURRENT_TIMESTAMP - INTERVAL '1 hour'),
+--     ('SENSOR_001', 27.5, 65.0, CURRENT_TIMESTAMP);
 
 -- Bảng Adafruit Feed Mapping - Liên kết feed từ Adafruit với thiết bị trong hệ thống
 INSERT INTO adafruit_feed_mapping (feed_key, thiet_bi_id, sensor_type, config) 
 VALUES 
-    ('yolohome-sensor', 'SENSOR_001', 'temperature', '{"unit":"celsius","min":0,"max":50}'),
+    ('yolohome-temp', 'SENSOR_001', 'temperature', '{"unit":"celsius","min":0,"max":50}'),
+    ('yolohome-humi', 'SENSOR_001', 'humidity', '{"unit":"percent","min":0,"max":100}'),
     ('yolohome-light', 'DEN_001', 'light', '{"has_rgb":true,"has_brightness":true}'),
     ('yolohome-fan', 'QUAT_001', 'fan', '{"min_speed":0,"max_speed":100}');
 
